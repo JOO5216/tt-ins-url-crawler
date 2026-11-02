@@ -1,27 +1,46 @@
 # TikTok URL 抓取脚本
 
-从 `C:\Users\panyu\Desktop\tt抓同款` 整理的可复用源码。当前目录没有确认可用的 Instagram URL 抓取脚本；`找图片/ins.py` 和 `ins找图.py` 的内容实际是 Facebook 脚本，因此没有收录。
+本仓库收录 5 个 TikTok 脚本，用于抓取视频 URL、博主账号和主页。当前没有确认可用的 Instagram URL 抓取脚本；原目录中的 `ins.py` 和 `ins找图.py` 实际是 Facebook 脚本，未收录。
 
-## 文件用途
+## 按需求选择
 
-| 文件 | 用途 |
-| --- | --- |
-| `tiktok拍同款抓取.py` | 按 TikTok 音乐页抓取视频 URL 和博主；优先尝试 TikWM API，失败时尝试 Playwright。也是标签脚本的公共 API 模块。 |
-| `tiktok标签抓取.py` | 按单个 Tag 抓取视频、账号、主页及播放量等字段；使用 API，必要时通过浏览器补充，按博主去重并导出 XLSX。 |
-| `tiktok标签抓取_Playwright.py` | 仅用 Playwright 抓取单个 Tag，按博主去重导出 XLSX。 |
-| `tiktok标签_API续抓.py` | 从已有的单 Tag XLSX 继续通过 API 抓取，保存游标和结果；依赖上面两个主脚本。 |
-| `补充两个标签.py` | 扫描 `asmrpersonalattention` 和 `asmrroleplay` 两个 Tag，跨标签去重并追加到既有 XLSX。脚本中的 `TARGET` 是原电脑的绝对路径，复用时先修改。 |
-| `tiktok抓取.py` | 通过 TikWM API 发现账号并保存到本地 SQLite/导出目录；包含特定筛选规则和固定代理配置。 |
+| 需求 | 脚本 | 方法 | 输出 | 说明 |
+| --- | --- | --- | --- | --- |
+| 音乐页“拍同款” | `tiktok拍同款抓取.py` | TikWM API 优先，Playwright 兜底 | CSV | [详细文档](docs/tiktok拍同款抓取.md) |
+| 单个 Tag | `tiktok标签抓取.py` | TikWM API，Playwright 兜底 | XLSX、断点、日志 | [详细文档](docs/tiktok标签抓取.md) |
+| 单个 Tag，只用浏览器 | `tiktok标签抓取_Playwright.py` | Playwright | XLSX | [详细文档](docs/tiktok标签抓取_Playwright.md) |
+| 从已有单 Tag 表继续 | `tiktok标签_API续抓.py` | TikWM API | XLSX、断点、日志 | [详细文档](docs/tiktok标签_API续抓.md) |
+| 预设标签批量发现账号 | `tiktok抓取.py` | TikWM API | SQLite、XLSX | [详细文档](docs/tiktok抓取.md) |
 
-## 安装与运行
+## 脚本依赖
+
+`tiktok标签抓取.py` 调用同目录的 `tiktok拍同款抓取.py` 获取 API 请求函数；`tiktok标签_API续抓.py` 又调用标签主脚本的解析、去重和导出函数。这三个文件需放在一起。另两个脚本可独立运行。
+
+## 安装
+
+Windows PowerShell，Python 3.10+：
 
 ```powershell
+cd "C:\Users\panyu\Desktop\tt-ins-url-crawler"
 python -m pip install -r requirements.txt
 python -m playwright install chromium
-python "tiktok标签抓取.py" "https://www.tiktok.com/tag/asmrroleplay"
-python "tiktok拍同款抓取.py" "https://www.tiktok.com/music/original-sound-7637835275050470164"
 ```
 
-纯 Playwright 模式可运行 `python "tiktok标签抓取_Playwright.py" "https://www.tiktok.com/tag/asmrroleplay"`。单 Tag 续抓时，把已有 XLSX 作为第二个参数传给 `tiktok标签_API续抓.py`。运行前按本机情况修改 `tiktok拍同款抓取.py` 和 `tiktok抓取.py` 中的 `PROXY`；不使用代理时设为空字符串。`补充两个标签.py` 还需修改 `TARGET`。
+纯 API 模式无需安装 Chromium。运行前检查 `tiktok拍同款抓取.py` 和 `tiktok抓取.py` 中的 `PROXY`；无代理时设为空字符串。
 
-这些脚本访问的是第三方 TikWM 接口，并非 TikTok 官方 API。接口可能限流或返回 403；导出结果和运行状态文件请留在本机，不要提交到仓库。
+## 常用命令
+
+```powershell
+python "tiktok拍同款抓取.py" "https://www.tiktok.com/music/original-sound-7637835275050470164"
+python "tiktok标签抓取.py" "https://www.tiktok.com/tag/asmrroleplay"
+python "tiktok标签抓取_Playwright.py" "https://www.tiktok.com/tag/asmrroleplay"
+python "tiktok标签_API续抓.py" "asmrroleplay" "C:\path\to\existing.xlsx"
+python "tiktok标签_API续抓.py" "asmrroleplay" "C:\path\to\existing.xlsx" --rescan
+python "tiktok抓取.py"
+```
+
+标签主脚本再次运行同一 Tag 会读取断点；加 `--fresh` 则从头运行。续抓脚本的 `--rescan` 保留已有账号并重置分页。续抓输入表必须只有一个 Tag，且表头与标签主脚本一致。
+
+标签 XLSX 含序号、TikTok账号、账号类型、视频URL、账号主页、时长(秒)、播放量、点赞量、封面人脸数、视频文案、来源标签、封面URL；账号类型和封面人脸数留空。音乐脚本输出视频链接、博主账号、博主主页、来源链接及抓取方式。
+
+接口是第三方 TikWM，并非 TikTok 官方 API。403、限流和重复分页均可能发生；抓到的数量不代表标签或音乐下的全部内容。搜索、相关推荐和音乐扩展路径只是脚本尝试的补充路径，不能保证长期可用。Excel、CSV、SQLite、日志、浏览器配置和断点文件已被 `.gitignore` 排除。
