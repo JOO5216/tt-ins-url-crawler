@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+*.xlsx
+*.csv
+*.json
+*.jsonl
+*.log
+*.db
+*.sqlite*
+*.bak
+*_profile/
+TikTok_Exports/
