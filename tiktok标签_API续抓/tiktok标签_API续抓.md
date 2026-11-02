@@ -1,10 +1,10 @@
 # tiktok标签_API续抓.py
 
-**用途**：从已有单 Tag XLSX 读取账号，继续扫描 TikWM Tag API，保留旧账号并对新增账号去重。需与 `tiktok标签抓取.py`、`tiktok拍同款抓取.py` 同目录。
+**用途**：从已有单 Tag XLSX 读取账号，继续扫描 TikWM Tag API，保留旧账号并对新增账号去重。需保留仓库中三个相关脚本的相邻文件夹结构。
 
 ```powershell
-python "tiktok标签_API续抓.py" "asmrroleplay" "C:\path\to\existing.xlsx"
-python "tiktok标签_API续抓.py" "asmrroleplay" "C:\path\to\existing.xlsx" --rescan
+python "tiktok标签_API续抓\tiktok标签_API续抓.py" "asmrroleplay" "C:\path\to\existing.xlsx"
+python "tiktok标签_API续抓\tiktok标签_API续抓.py" "asmrroleplay" "C:\path\to\existing.xlsx" --rescan
 ```
 
 ## 结构

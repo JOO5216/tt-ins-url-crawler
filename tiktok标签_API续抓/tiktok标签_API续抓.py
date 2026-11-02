@@ -9,7 +9,7 @@ import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
-spec = importlib.util.spec_from_file_location('tag_base', ROOT / 'tiktok标签抓取.py')
+spec = importlib.util.spec_from_file_location('tag_base', ROOT.parent / 'tiktok标签抓取' / 'tiktok标签抓取.py')
 base = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(base)
 

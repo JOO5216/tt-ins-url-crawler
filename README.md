@@ -6,15 +6,15 @@
 
 | 需求 | 脚本 | 方法 | 输出 | 说明 |
 | --- | --- | --- | --- | --- |
-| 音乐页“拍同款” | `tiktok拍同款抓取.py` | TikWM API 优先，Playwright 兜底 | CSV | [详细文档](docs/tiktok拍同款抓取.md) |
-| 单个 Tag | `tiktok标签抓取.py` | TikWM API，Playwright 兜底 | XLSX、断点、日志 | [详细文档](docs/tiktok标签抓取.md) |
-| 单个 Tag，只用浏览器 | `tiktok标签抓取_Playwright.py` | Playwright | XLSX | [详细文档](docs/tiktok标签抓取_Playwright.md) |
-| 从已有单 Tag 表继续 | `tiktok标签_API续抓.py` | TikWM API | XLSX、断点、日志 | [详细文档](docs/tiktok标签_API续抓.md) |
-| 预设标签批量发现账号 | `tiktok抓取.py` | TikWM API | SQLite、XLSX | [详细文档](docs/tiktok抓取.md) |
+| 音乐页“拍同款” | `tiktok拍同款抓取.py` | TikWM API 优先，Playwright 兜底 | CSV | [详细文档](tiktok拍同款抓取/tiktok拍同款抓取.md) |
+| 单个 Tag | `tiktok标签抓取.py` | TikWM API，Playwright 兜底 | XLSX、断点、日志 | [详细文档](tiktok标签抓取/tiktok标签抓取.md) |
+| 单个 Tag，只用浏览器 | `tiktok标签抓取_Playwright.py` | Playwright | XLSX | [详细文档](tiktok标签抓取_Playwright/tiktok标签抓取_Playwright.md) |
+| 从已有单 Tag 表继续 | `tiktok标签_API续抓.py` | TikWM API | XLSX、断点、日志 | [详细文档](tiktok标签_API续抓/tiktok标签_API续抓.md) |
+| 预设标签批量发现账号 | `tiktok抓取.py` | TikWM API | SQLite、XLSX | [详细文档](tiktok抓取/tiktok抓取.md) |
 
 ## 脚本依赖
 
-`tiktok标签抓取.py` 调用同目录的 `tiktok拍同款抓取.py` 获取 API 请求函数；`tiktok标签_API续抓.py` 又调用标签主脚本的解析、去重和导出函数。这三个文件需放在一起。另两个脚本可独立运行。
+`tiktok标签抓取.py` 从相邻的 `tiktok拍同款抓取` 文件夹加载 API 请求函数；`tiktok标签_API续抓.py` 从相邻的 `tiktok标签抓取` 文件夹加载解析、去重和导出函数。因此应保留仓库的文件夹结构。另两个脚本可独立运行。
 
 ## 安装
 
@@ -31,12 +31,12 @@ python -m playwright install chromium
 ## 常用命令
 
 ```powershell
-python "tiktok拍同款抓取.py" "https://www.tiktok.com/music/original-sound-7637835275050470164"
-python "tiktok标签抓取.py" "https://www.tiktok.com/tag/asmrroleplay"
-python "tiktok标签抓取_Playwright.py" "https://www.tiktok.com/tag/asmrroleplay"
-python "tiktok标签_API续抓.py" "asmrroleplay" "C:\path\to\existing.xlsx"
-python "tiktok标签_API续抓.py" "asmrroleplay" "C:\path\to\existing.xlsx" --rescan
-python "tiktok抓取.py"
+python "tiktok拍同款抓取\tiktok拍同款抓取.py" "https://www.tiktok.com/music/original-sound-7637835275050470164"
+python "tiktok标签抓取\tiktok标签抓取.py" "https://www.tiktok.com/tag/asmrroleplay"
+python "tiktok标签抓取_Playwright\tiktok标签抓取_Playwright.py" "https://www.tiktok.com/tag/asmrroleplay"
+python "tiktok标签_API续抓\tiktok标签_API续抓.py" "asmrroleplay" "C:\path\to\existing.xlsx"
+python "tiktok标签_API续抓\tiktok标签_API续抓.py" "asmrroleplay" "C:\path\to\existing.xlsx" --rescan
+python "tiktok抓取\tiktok抓取.py"
 ```
 
 标签主脚本再次运行同一 Tag 会读取断点；加 `--fresh` 则从头运行。续抓脚本的 `--rescan` 保留已有账号并重置分页。续抓输入表必须只有一个 Tag，且表头与标签主脚本一致。

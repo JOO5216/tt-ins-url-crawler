@@ -3,7 +3,7 @@
 **用途**：按预设种子 Tag 批量发现 TikTok 账号，依据元数据规则筛选个人博主和访谈类账号，输出账号及代表作品。直接运行 `main()`，没有单 Tag URL 命令行参数。
 
 ```powershell
-python "tiktok抓取.py"
+python "tiktok抓取\tiktok抓取.py"
 ```
 
 ## 结构

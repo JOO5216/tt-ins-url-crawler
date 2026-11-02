@@ -13,7 +13,7 @@ from urllib.parse import quote, unquote, urlsplit
 
 
 SCRIPT_DIR = Path(__file__).resolve().parent
-CORE_PATH = SCRIPT_DIR / "tiktok拍同款抓取.py"
+CORE_PATH = SCRIPT_DIR.parent / "tiktok拍同款抓取" / "tiktok拍同款抓取.py"
 PROFILE_DIR = SCRIPT_DIR / ".tiktok_tag_playwright_profile"
 TARGET_CREATORS = 3000
 MAX_SCROLLS = 800

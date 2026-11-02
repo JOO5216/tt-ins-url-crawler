@@ -3,7 +3,7 @@
 **用途**：输入 TikTok 音乐页或使用该音乐的原视频 URL，收集同音乐视频及其博主；每个博主只保留一条。入口是 `main()`，`--self-test` 可运行解析检查。
 
 ```powershell
-python "tiktok拍同款抓取.py" "https://www.tiktok.com/music/original-sound-7637835275050470164"
+python "tiktok拍同款抓取\tiktok拍同款抓取.py" "https://www.tiktok.com/music/original-sound-7637835275050470164"
 ```
 
 ## 结构

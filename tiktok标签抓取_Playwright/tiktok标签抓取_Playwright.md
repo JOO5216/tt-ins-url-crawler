@@ -3,7 +3,7 @@
 **用途**：仅用 Playwright 浏览 Tag 页面，收集视频 URL、账号和主页，按账号去重导出 XLSX；不调用 TikWM API。`--self-test` 可运行本地解析检查。
 
 ```powershell
-python "tiktok标签抓取_Playwright.py" "https://www.tiktok.com/tag/asmrroleplay"
+python "tiktok标签抓取_Playwright\tiktok标签抓取_Playwright.py" "https://www.tiktok.com/tag/asmrroleplay"
 ```
 
 ## 结构
