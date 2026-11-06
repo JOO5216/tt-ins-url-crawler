@@ -21,7 +21,7 @@
 Windows PowerShell，Python 3.10+：
 
 ```powershell
-cd "C:\Users\panyu\Desktop\tt-ins-url-crawler"
+cd "···\tt-ins-url-crawler"
 python -m pip install -r requirements.txt
 python -m playwright install chromium
 ```
